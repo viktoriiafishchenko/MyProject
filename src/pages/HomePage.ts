@@ -22,4 +22,16 @@ export default class HomePage {
   async clickProductsButton() {
     await this.homeElements.productsButton.click();
   }
+  async scrollToFooter() {
+    await this.homeElements.footerElement.scrollIntoViewIfNeeded();
+}
+async fillSubscriptionEmail(email: string) {
+  await this.homeElements.emailInput.fill(email); 
+}
+async clickSubscribeButton() {
+  await this.homeElements.subscribeButton.click();  
+}
+async clickCartButton() {
+  await this.homeElements.cartButton.click();
+}
 }

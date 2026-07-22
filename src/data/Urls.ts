@@ -6,4 +6,6 @@ export const URLS = {
   ACCOUNT_CREATED: '/account_created',
   TEST_CASES: '/test_cases',
   PRODUCTS: '/products',
+  FIRST_PRODUCT: '/product_details/1',
+  CART: '/view_cart',
 } as const;

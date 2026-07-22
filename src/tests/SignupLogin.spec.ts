@@ -6,20 +6,15 @@ import SignupPage from '../pages/SignupPage';
 import { Users } from '../data/Users';
 import HomePage from '../pages/HomePage';
 
-let signupLoginPage: SignupLoginPage
-let signupPage: SignupPage
-let homePage: HomePage;
-
-
 test('Signup user with valid data', async ({ page }) => {
   await page.goto(URLS.LOGIN);
-  signupLoginPage = new SignupLoginPage(page);
+  const signupLoginPage = new SignupLoginPage(page);
   await signupLoginPage.fillSignupName(faker.person.firstName());
   await signupLoginPage.fillSignupEmail(faker.internet.email());
   await signupLoginPage.clickSignupButton();
   await expect(page).toHaveURL(URLS.SIGNUP);
 
-  signupPage = new SignupPage(page);
+  const signupPage = new SignupPage(page);
   await signupPage.fillPassword(faker.internet.password());
   await signupPage.selectDayBirth('1');
   await signupPage.selectMonthBirth('January');
@@ -38,20 +33,20 @@ test('Signup user with valid data', async ({ page }) => {
 
 test('Login User with correct email and password', async ({ page }) => {
   await page.goto(URLS.LOGIN);
-  signupLoginPage = new SignupLoginPage(page);
+  const signupLoginPage = new SignupLoginPage(page);
   const user = Users.validUser;
 
   await signupLoginPage.fillLoginEmail(user.email);
   await signupLoginPage.fillLoginPassword(user.password);
   await signupLoginPage.clickLoginButton();
   await expect(page).toHaveURL(URLS.HOME);
-  homePage = new HomePage(page);
+  const homePage = new HomePage(page);
   await homePage.waitLogoutTextVisible();
 });
 
 test('Login User with incorrect email and password', async ({ page }) => {
   await page.goto(URLS.LOGIN);
-  signupLoginPage = new SignupLoginPage(page);
+  const signupLoginPage = new SignupLoginPage(page);
 
   await signupLoginPage.fillLoginEmail(faker.internet.email());
   await signupLoginPage.fillLoginPassword(faker.internet.password());
@@ -60,10 +55,9 @@ test('Login User with incorrect email and password', async ({ page }) => {
   await signupLoginPage.waitForErrorMessage();
 });
 
-
 test('Register User with existing email', async ({ page }) => {
   await page.goto(URLS.LOGIN);
-  signupLoginPage = new SignupLoginPage(page);
+  const signupLoginPage = new SignupLoginPage(page);
   const user = Users.validUser;
 
   await signupLoginPage.fillSignupName(faker.person.firstName());

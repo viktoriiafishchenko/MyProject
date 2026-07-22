@@ -10,6 +10,12 @@ export class HomeElements {
   readonly contactUsButton: Locator;
   readonly testCasesButton: Locator;
   readonly productsButton: Locator;
+  readonly footerElement: Locator;
+  readonly subscriptionSection: Locator;
+  readonly emailInput: Locator;
+  readonly subscribeButton: Locator;
+  readonly succsessMessage: Locator;
+  readonly cartButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -23,5 +29,11 @@ export class HomeElements {
     this.contactUsButton = this.navigateBar.getByText('Contact us');
     this.testCasesButton = this.navigateBar.getByText('Test Cases');
     this.productsButton = this.navigateBar.getByText('Products');
+    this.footerElement = page.locator('#footer');
+    this.subscriptionSection = this.footerElement.locator('.single-widget');
+    this.emailInput = this.subscriptionSection.locator('#susbscribe_email');
+    this.subscribeButton = this.subscriptionSection.locator('#subscribe');
+    this.succsessMessage = this.subscriptionSection.locator('.alert-success');
+    this.cartButton = this.navigateBar.getByText('Cart');
   }
 }
