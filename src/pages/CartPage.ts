@@ -12,4 +12,19 @@ export default class CartPage {
             await expect(this.cartElements.cartProducts).toHaveCount(expectedCount);
         }
 
+        async clickProceedToCheckoutButton() {
+            await this.cartElements.proceedToCheckoutButton.click();
+        }
+
+        async clickContinueOnCartButton() {
+            await this.cartElements.continueOnCartButton.click();
+        }
+
+        async clickRegisterLoginButton() {
+            await this.cartElements.registerLoginButton.click();
+        }
+
+        async clickDeleteProductButton() {
+            await this.cartElements.deleteProductButton.click();
+        }
     }

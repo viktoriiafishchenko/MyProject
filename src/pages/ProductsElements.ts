@@ -12,6 +12,7 @@ export class ProductsElements {
     readonly addToCartButton: Locator;
     readonly popupElement: Locator;
     readonly continueShoppingButton: Locator;
+    readonly viewCartButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -26,6 +27,7 @@ export class ProductsElements {
 
     this.popupElement = page.locator('.modal-content');
     this.continueShoppingButton = this.popupElement.locator('[data-dismiss="modal"]');
+    this.viewCartButton = this.popupElement.getByText('View Cart');
 
 
 

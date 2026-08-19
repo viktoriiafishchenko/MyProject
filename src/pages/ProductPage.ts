@@ -26,4 +26,9 @@ export default class ProductPage {
     async clickContinueShoppingButton() {
         await this.productElements.continueShoppingButton.click();
     }
+
+    async clickAddToCartAndContinue() {
+        await this.productElements.addToCartButton.click();
+        await this.productElements.continueShoppingButton.click();
+    }
 }

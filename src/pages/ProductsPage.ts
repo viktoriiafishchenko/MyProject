@@ -34,5 +34,21 @@ export default class ProductsPage {
 
     async clickContinueShoppingButton() {
         await this.productsElements.continueShoppingButton.click();
-}
+    }
+
+    async clickViewCartButton() {
+      await this.productsElements.viewCartButton.click();
+    }
+
+    async addToCartAndContinue(index: number) {
+      await this.productsElements.addToCartButton.nth(index).hover();
+      await this.productsElements.addToCartButton.nth(index).click();
+      await this.productsElements.continueShoppingButton.click();
+    }
+
+    async addToCartAndViewCart(index: number) {
+      await this.productsElements.addToCartButton.nth(index).hover();
+      await this.productsElements.addToCartButton.nth(index).click();
+      await this.productsElements.viewCartButton.click();
+    }
 }
