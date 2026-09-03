@@ -1,10 +1,12 @@
-import { Page, expect } from '@playwright/test';
+import { Page } from '@playwright/test';
+import { BasePage } from './BasePage';
 import { SignupElements } from './SignupElements';
 
-export default class SignupPage {
+export default class SignupPage extends BasePage {
   readonly signupElements: SignupElements;
 
-  constructor(readonly page: Page) {
+  constructor(page: Page) {
+    super(page);
     this.signupElements = new SignupElements(page);
   }
 

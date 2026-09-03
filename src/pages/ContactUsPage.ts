@@ -1,11 +1,13 @@
 import { Page, expect } from '@playwright/test';
+import { BasePage } from './BasePage';
 import { ContactUsElements } from './ContactUsElements';
 import path from 'path';
 
-export default class ContactUsPage {
+export default class ContactUsPage extends BasePage {
   readonly contactUsElements: ContactUsElements;
 
-  constructor(readonly page: Page) {
+  constructor(page: Page) {
+    super(page);
     this.contactUsElements = new ContactUsElements(page);
   }
 

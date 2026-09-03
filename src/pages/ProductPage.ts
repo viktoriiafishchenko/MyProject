@@ -1,16 +1,19 @@
 import { Page, expect } from '@playwright/test';
-import {ProductElements} from './ProductElements';
+import { BasePage } from './BasePage';
+import { ProductElements } from './ProductElements';
 
-export default class ProductPage {
+export default class ProductPage extends BasePage {
     readonly productElements: ProductElements;
 
-    constructor(readonly page: Page) {
+    constructor(page: Page) {
+        super(page);
         this.productElements = new ProductElements(page);
     }
 
     async checkImage() {
         await expect(this.productElements.image).toBeVisible();
     }
+
     async checkAddToCartButton() {
         await expect(this.productElements.addToCartButton).toBeVisible();
     }
@@ -30,5 +33,9 @@ export default class ProductPage {
     async clickAddToCartAndContinue() {
         await this.productElements.addToCartButton.click();
         await this.productElements.continueShoppingButton.click();
+    }
+
+    async clickViewCartButton() {
+        await this.productElements.viewCartButton.click();
     }
 }

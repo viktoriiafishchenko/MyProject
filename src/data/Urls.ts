@@ -8,4 +8,8 @@ export const URLS = {
   PRODUCTS: '/products',
   FIRST_PRODUCT: '/product_details/1',
   CART: '/view_cart',
+  ACCOUNT_DELETED: '/delete_account',
+  CHECKOUT: '/checkout',
+  PAYMENT: '/payment',
+  PAYMENT_DONE: '/payment_done/500',
 } as const;

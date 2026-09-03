@@ -5,11 +5,12 @@ import { ProductsElements } from '../pages/ProductsElements';
 import HomePage from '../pages/HomePage';
 import { CartElements } from '../pages/CartElements';
 import ProductPage from '../pages/ProductPage';
-import { ProductElements } from '../pages/ProductElements';
 import CartPage from '../pages/CartPage';
 import SignupLoginPage from '../pages/SignupLoginPage';
-import { faker } from '@faker-js/faker';
+import { fa, faker } from '@faker-js/faker';
 import SignupPage from '../pages/SignupPage';
+import CheckoutPage from '../pages/CheckoutPage';
+import PaymentPage from '../pages/PaymentPage';
 
 test('Add Products in Cart', async ({ page }) => {
     await page.goto(URLS.PRODUCTS)
@@ -36,7 +37,6 @@ test('Add Products in Cart', async ({ page }) => {
 test('Verify Product Quantity in Cart', async ({ page }) => {
     await page.goto(URLS.FIRST_PRODUCT)
     const productPage = new ProductPage(page);
-    const productElements = new ProductElements(page);
     await productPage.fillQuantityInput('4');
     await productPage.clickAddToCartButton();
     await productPage.clickContinueShoppingButton();
@@ -98,4 +98,53 @@ test('Remove Products From Cart', async ({ page }) => {
     await cartPage.clickDeleteProductButton();
     await expect(cartElements.emptyCartElement).toBeVisible();
     await expect(cartElements.cartIsEmptyText).toHaveText('Cart is empty! Click here to buy products.');
+});
+
+test('Pay and Finish order', async ({ page }) => {
+    await page.goto(URLS.LOGIN);
+    const signupLoginPage = new SignupLoginPage(page);
+    await signupLoginPage.fillSignupName(faker.person.firstName());
+    await signupLoginPage.fillSignupEmail(faker.internet.email());
+    await signupLoginPage.clickSignupButton();
+    await expect(page).toHaveURL(URLS.SIGNUP);
+
+    const signupPage = new SignupPage(page);
+    await signupPage.fillPassword(faker.internet.password());
+    await signupPage.selectDayBirth('1');
+    await signupPage.selectMonthBirth('January');
+    await signupPage.selectYearBirth('1990');
+    await signupPage.fillFirstName(faker.person.firstName());
+    await signupPage.fillLastName(faker.person.lastName());
+    await signupPage.fillAddress1(faker.location.streetAddress());
+    await signupPage.selectCountry('United States');
+    await signupPage.fillState(faker.location.state());
+    await signupPage.fillCity(faker.location.city());
+    await signupPage.fillZipcode(faker.location.zipCode());
+    await signupPage.fillMobileNumber(faker.phone.number());
+    await signupPage.clickCreateAccountButton();
+    await expect(page).toHaveURL(URLS.ACCOUNT_CREATED);
+
+    await page.goto(URLS.FIRST_PRODUCT)
+    const productPage = new ProductPage(page);
+    await productPage.clickAddToCartButton();
+    await productPage.clickViewCartButton();
+    await expect(page).toHaveURL(URLS.CART);
+    const cartPage = new CartPage(page);
+    await cartPage.clickProceedToCheckoutButton();
+    await expect(page).toHaveURL(URLS.CHECKOUT);
+    const checkoutPage = new CheckoutPage(page);
+    await checkoutPage.clickPleaseOrderButton();
+    await expect(page).toHaveURL(URLS.PAYMENT);
+    const paymentPage = new PaymentPage(page);
+    await paymentPage.fillNameOnCardInput(faker.person.fullName());
+    await paymentPage.fillCardNumberInput(faker.finance.creditCardNumber());
+    await paymentPage.fillCvcInput(faker.finance.creditCardCVV());
+    await paymentPage.fillExpirationMonthInput(faker.date.month({ abbreviated: true }));
+    await paymentPage.fillExpirationYearInput(faker.date.future().getFullYear().toString());
+    await paymentPage.clickPayAndConfirmButton();
+    await expect(page).toHaveURL(URLS.PAYMENT_DONE);
+
+    //TODO: Check that order is placed and visible in the user account
+    //TODO: Check page for order confirmation message
+    //TODO: Download invoice and check that it is correct
 });
